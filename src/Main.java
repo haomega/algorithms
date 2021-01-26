@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        String[] params = {"1", "2", "3","4"};
+        String[] params = {"1", "a", "a", "4"};
         List<String[]> result = pailiezuhe(params);
         System.out.println("总共有：" + result.size());
         for (String[] strings : result) {
@@ -35,7 +35,9 @@ public class Main {
         if (params.length == 1) {
             List<String[]> result = new ArrayList<>();
             result.add(new String[]{"a"});
-            result.add(new String[]{params[0]});
+            if (!"a".equals(params[0])) {
+                result.add(new String[]{params[0]});
+            }
             return result;
         }
         List<String[]> nResult = pailiezuhe(Arrays.copyOf(params, params.length - 1));
@@ -46,10 +48,12 @@ public class Main {
             aResult.add(sNew);
         }
         List<String[]> realResult = new ArrayList<>();
-        for (String[] strings : nResult) {
-            String[] sNew = Arrays.copyOf(strings, strings.length + 1);
-            sNew[sNew.length - 1] = params[params.length - 1];
-            realResult.add(sNew);
+        if (!"a".equals(params[params.length - 1])){
+            for (String[] strings : nResult) {
+                String[] sNew = Arrays.copyOf(strings, strings.length + 1);
+                sNew[sNew.length - 1] = params[params.length - 1];
+                realResult.add(sNew);
+            }
         }
         realResult.addAll(aResult);
         return realResult;
